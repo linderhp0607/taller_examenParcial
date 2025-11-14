@@ -1,4 +1,13 @@
 {
 "producto": [
-
+	{
+		"id_producto" : 1,
+		"nombre" : "Silla Gamer",
+		"precio" : 500.00
+	},
+	{
+		"id_producto" : 2,
+		"nombre" : "teclado Mecanico",
+		"precio" : 150.00
+	}
 ]}

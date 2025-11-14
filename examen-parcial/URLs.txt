@@ -1,0 +1,6 @@
+MICROSERVICIO USUARIOS:
+Swagger UI:http://localhost:85/swagger-ui/index.html
+Login (POST):POST http://localhost:85/api/v1/usuarios/login
+MICROSERVICIO PRODUCTO:
+Swagger UI:http://localhost:86/swagger-ui/index.html
+Actualizar Precio (POST):POST http://localhost:86/api/v1/productos/actualizar-precio

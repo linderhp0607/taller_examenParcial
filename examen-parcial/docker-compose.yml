@@ -1,0 +1,64 @@
+services:
+
+  # =======================
+  #   BASE DE DATOS USUARIO (MONGO)
+  # =======================
+  mongo-usuarios:
+    image: mongo:6
+    container_name: mongo-usuarios
+    restart: always
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongo_usuarios_data:/data/db
+
+  ms-usuario:
+    build: ./usuarios
+    container_name: ms-usuario
+    restart: always
+    depends_on:
+      - mongo-usuarios
+    ports:
+      - "85:85"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo-usuarios:27017/db_usuario
+      SERVER_PORT: 85
+    volumes:
+      - ./usuarios/logs:/app/logs
+
+  # =======================
+  #   BASE DE DATOS PRODUCTO (POSTGRES)
+  # =======================
+  postgres-producto:
+    image: postgres:16
+    container_name: postgres-producto
+    restart: always
+    environment:
+      POSTGRES_DB: db_producto
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5439:5432"
+    volumes:
+      - postgres_producto_data:/var/lib/postgresql/data
+
+  ms-producto:
+    build: ./productos
+    container_name: ms-producto
+    restart: always
+    depends_on:
+      - postgres-producto
+    ports:
+      - "86:86"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-producto:5432/db_producto
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SERVER_PORT: 86
+    volumes:
+      - ./productos/logs:/app/logs
+
+volumes:
+  mongo_usuarios_data:
+  postgres_producto_data:
+
